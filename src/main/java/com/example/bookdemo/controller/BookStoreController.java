@@ -1,5 +1,6 @@
 package com.example.bookdemo.controller;
 
+import com.example.bookdemo.entity.Store;
 import com.example.bookdemo.vo.BookStoreReq;
 import com.example.bookdemo.service.BookStoreService;
 import com.example.bookdemo.vo.BookStoreVO;
@@ -20,6 +21,7 @@ public class BookStoreController {
 
     @Tag(name = "Add", description = "Write")
     @PostMapping("/add")
+    @Operation(summary = "Create store and books record")
     public ResponseEntity<String> addBookStore(@RequestBody BookStoreReq req){
         bookStoreService.addBookStore(req);
         return ResponseEntity.ok("Create bookstore information successfully");
@@ -32,17 +34,38 @@ public class BookStoreController {
 //        return bookStoreService.getBookStore();
 //    }
 
+    @Tag(name = "Get")
     @GetMapping("/store/{storeId}")
-    @Operation(summary = "View bookstore by id")
-    public ResponseEntity <List<String>> getBookStoresByStoreId(@PathVariable int storeId) {
+    @Operation(summary = "View bookstore address by id")
+    public ResponseEntity <List<String>> getBookStoresByStoreId(@PathVariable Long storeId) {
         List<String> addresses = bookStoreService.getBookStore(storeId);
         return new ResponseEntity<>(addresses, HttpStatus.OK);
     }
 
+    @Tag(name = "Get")
     @GetMapping("/store/{storeId}/books")
-    public ResponseEntity<BookStoreVO> getBookStoreList(@PathVariable int storeId) {
+    @Operation(summary = "View book list in a store by store id")
+    public ResponseEntity<BookStoreVO> getBookStoreList(@PathVariable Long storeId) {
         BookStoreVO bookStoreVO = bookStoreService.getBookStoreList(storeId);
         return new ResponseEntity<>(bookStoreVO, HttpStatus.OK);
     }
+
+    @Tag(name = "Update", description = "Update existing store and books record")
+    @PutMapping("/update/{bookStoreId}")
+    @Operation(summary = "Update store and books record by BookStore ID")
+    public ResponseEntity<String> updateBookStore(@PathVariable Long bookStoreId, @RequestBody BookStoreReq req) {
+        bookStoreService.updateBookStore(bookStoreId, req);
+        return ResponseEntity.ok("Updated bookstore information successfully");
+    }
+
+    @Tag(name = "Delete", description = "Delete store and books record")
+    @DeleteMapping("/delete/{bookStoreId}")
+    @Operation(summary = "Delete store and books record by BookStore ID")
+    public ResponseEntity<String> deleteBookStore(@PathVariable Long bookStoreId) {
+        bookStoreService.deleteBookStore(bookStoreId);
+        return ResponseEntity.ok("Deleted bookstore information successfully");
+    }
+
+
 
 }

@@ -20,39 +20,40 @@ public class StoreController {
 
     @Tag(name = "Add", description = "Write")
     @PostMapping("/add")
+    @Operation(summary = "Create store record")
     public ResponseEntity<String> addStore(@RequestBody Store store) {
         storeService.addStore(store);
         return ResponseEntity.ok("Create store information successfully");
     }
 
-    @Tag(name = "get", description = "Read")
+    @Tag(name = "Get")
     @GetMapping
     @Operation(summary = "View all stores")
     public List<Store> getStores() {
         return storeService.getStores();
     }
 
-    @Tag(name = "get", description = "View selected book by id")
+    @Tag(name = "Get")
     @GetMapping("/get")
     @Operation(summary = "View store by id")
-    public Store getStore(@RequestParam int id) {
+    public Store getStore(@RequestParam Long id) {
         return storeService.getStore(id);
     }
 
-    @Tag(name = "put", description = "Update")
+    @Tag(name = "Put")
     @PutMapping("/update/{id}")
-    @Operation(summary = "Update book information")
-    public ResponseEntity<String> updateBook(@PathVariable int id, @RequestBody Store store) {
+    @Operation(summary = "Update store information")
+    public ResponseEntity<String> updateBook(@PathVariable Long id, @RequestBody Store store) {
         storeService.updateStore(id, store);
         return ResponseEntity.ok("Update store information successfully");
 
     }
 
 
-    @Tag(name = "delete", description = "Delete")
+    @Tag(name = "Delete")
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete stores")
-    public ResponseEntity<String> deleteStore(@PathVariable int id) {
+    public ResponseEntity<String> deleteStore(@PathVariable Long id) {
         storeService.deleteStore(id);
         return ResponseEntity.ok("Delete store successfully");
     }

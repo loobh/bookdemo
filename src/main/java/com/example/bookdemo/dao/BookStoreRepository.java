@@ -11,7 +11,8 @@ import java.util.Optional;
 public interface BookStoreRepository extends JpaRepository <BookStore, Long>{
 
 
-    List<BookStore> findByStoreId(int storeId);
+//    BookStore findByBookStoreId(Long id);
+    List<BookStore> findByStoreId(Long storeId);
 
 }
 

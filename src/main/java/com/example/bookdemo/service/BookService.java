@@ -9,12 +9,11 @@ public interface BookService {
 
     List<Book> getBooks();
 
+    Book updateBook(Long id, Book book);
 
-    Book updateBook(int id, Book book);
+    Book getBook(Long id);
 
-    Book getBook(int id);
-
-    void deleteBook(int id);
+    void deleteBook(Long id);
 }
 
 

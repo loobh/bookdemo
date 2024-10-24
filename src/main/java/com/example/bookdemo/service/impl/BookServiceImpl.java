@@ -36,7 +36,7 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public Book updateBook(int id, Book book) {
+    public Book updateBook(Long id, Book book) {
         bookRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid book id "+ id));
 
@@ -47,14 +47,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book getBook(int id) {
+    public Book getBook(Long id) {
         return bookRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid book id "+ id));
     }
 
     @Override
-    public void deleteBook(int id) {
+    public void deleteBook(Long id) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid book id "+ id));
 
@@ -96,7 +96,6 @@ public class BookServiceImpl implements BookService {
 //    }
 
 public static String testHttp() {
-    // Fetch data from the API using Unirest
     HttpResponse<String> response = Unirest.get("https://api.github.com/users/octocat/repos")
             .asString();
     System.out.println("Response was: " + response.getBody());
@@ -104,20 +103,14 @@ public static String testHttp() {
 }
 
     public static void main(String[] args) {
-        // Fetch the JSON response
         String jsonResponse = testHttp();
-
-        // Initialize Gson
         Gson gson = new Gson();
-
-        // Convert the JSON string to a JsonArray
         JsonArray jsonArray = gson.fromJson(jsonResponse, JsonArray.class);
 
-        // Loop through the JSON array and map the required attributes to the JsonObject class
         for (int i = 0; i < jsonArray.size(); i++) {
             com.google.gson.JsonObject jsonElement = jsonArray.get(i).getAsJsonObject();
 
-            // Extracting attributes
+
             Long id = jsonElement.get("id").getAsLong();
             String node_id = jsonElement.get("node_id").getAsString();
             String name = jsonElement.get("name").getAsString();

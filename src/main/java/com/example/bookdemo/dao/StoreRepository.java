@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface StoreRepository extends JpaRepository<Store, Integer> {
-    Store getStoreById(int storeId);
+public interface StoreRepository extends JpaRepository<Store, Long> {
+    Store getStoreById(Long storeId);
 }
 
 

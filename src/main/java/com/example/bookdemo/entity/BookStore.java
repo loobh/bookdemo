@@ -19,6 +19,6 @@ public class BookStore {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Integer id;
+    private Long id;
 
 }

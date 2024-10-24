@@ -1,7 +1,7 @@
 package com.example.bookdemo.vo;
 
 public class StoreVO {
-    private int id;
+    private Long id;
     private String shopName;
     private String address;
 }

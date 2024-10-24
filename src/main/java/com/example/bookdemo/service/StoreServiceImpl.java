@@ -24,13 +24,13 @@ public class StoreServiceImpl {
         return storeRepository.findAll();
     }
 
-    public Store getStore(int id) {
+    public Store getStore(Long id) {
         return storeRepository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid store id "+ id));
     }
 
-    public Store updateStore(int id, Store store) {
+    public Store updateStore(Long id, Store store) {
         storeRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid store id "+ id));
 
@@ -40,7 +40,7 @@ public class StoreServiceImpl {
         return store;
     }
 
-    public void deleteStore(int id) {
+    public void deleteStore(Long id) {
         Store store = storeRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Invalid store id "+ id));
 

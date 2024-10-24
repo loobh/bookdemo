@@ -19,40 +19,40 @@ public class BookController {
 
     @Tag(name = "Add", description = "Write")
     @PostMapping("/add")
+    @Operation(summary = "Create books record")
     public ResponseEntity<String> addUser(@RequestBody Book book) {
         bookService.addBook(book);
         return ResponseEntity.ok("Create user information successfully");
     }
 
-    @Tag(name = "get", description = "Read")
+    @Tag(name = "Get", description = "Read")
     @GetMapping
     @Operation(summary = "View all books")
     public List<Book> getBooks() {
         return bookService.getBooks();
     }
 
-    @Tag(name = "get", description = "View selected book by id")
+    @Tag(name = "Get")
     @GetMapping("/get")
     @Operation(summary = "View book by id")
-    public Book getBook(@RequestParam int id) {
+    public Book getBook(@RequestParam Long id) {
         return bookService.getBook(id);
     }
 
-    @Tag(name = "put", description = "Update")
+    @Tag(name = "Put", description = "Update")
     @PutMapping("/update/{id}")
     @Operation(summary = "Update book information")
-    public ResponseEntity<String> updateBook(@PathVariable int id, @RequestBody Book book) {
+    public ResponseEntity<String> updateBook(@PathVariable Long id, @RequestBody Book book) {
         bookService.updateBook(id, book);
         //return ResponseEntity.noContent().build();
         return ResponseEntity.ok("Update book information successfully");
 
     }
 
-
-    @Tag(name = "delete", description = "Delete")
+    @Tag(name = "Delete", description = "Delete")
     @DeleteMapping("/delete/{id}")
     @Operation(summary = "Delete books")
-    public ResponseEntity<String> deleteBook(@PathVariable int id) {
+    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
         return ResponseEntity.ok("Delete book successfully");
     }

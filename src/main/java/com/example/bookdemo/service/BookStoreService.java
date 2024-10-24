@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,8 +27,8 @@ public class BookStoreService {
     private StoreRepository storeRepository;
 
     public void addBookStore(BookStoreReq req) {
-        int storeId = req.getStoreId();
-        int bookId = req.getBookId();
+        Long storeId = req.getStoreId();
+        Long bookId = req.getBookId();
 
         BookStore newBookStore = new BookStore();
 
@@ -56,7 +57,7 @@ public class BookStoreService {
 //    return addresses;
 //}
 
-    public List<String> getBookStore(int storeId) {
+    public List<String> getBookStore(Long storeId) {
         List<BookStore> bookStores = bookStoreRepository.findByStoreId(storeId);
         ///This will only look at the first saved data.
         //bookStores.get(0).getStore().getAddress();
@@ -67,7 +68,7 @@ public class BookStoreService {
                 .collect(Collectors.toList());
     }
 
-    public BookStoreVO getBookStoreList(int storeId) {
+    public BookStoreVO getBookStoreList(Long storeId) {
         List<BookStore> bookStoreList = bookStoreRepository.findByStoreId(storeId);
         if (bookStoreList.isEmpty()) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No books found for store with id: " + storeId);
@@ -80,6 +81,33 @@ public class BookStoreService {
 
         return new BookStoreVO(store.getShopName(), store.getAddress(), bookTitles);
     }
+
+    public void updateBookStore(Long bookStoreId, BookStoreReq req) {
+        BookStore existingBookStore = bookStoreRepository.getById(bookStoreId);
+        if (existingBookStore == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No books found for store with id: " + bookStoreId);
+        }
+
+        Book updatedBook = bookRepository.getBookById(req.getBookId());
+        Store updatedStore = storeRepository.getStoreById(req.getStoreId());
+
+        existingBookStore.setBook(updatedBook);
+        existingBookStore.setStore(updatedStore);
+
+        bookStoreRepository.save(existingBookStore);
+    }
+
+
+    public void deleteBookStore(Long bookStoreId) {
+        BookStore bookStore = bookStoreRepository.getById(bookStoreId);
+        if (bookStore == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No books found for store with id: " + bookStoreId);
+        }
+
+        bookStoreRepository.delete(bookStore);
+    }
+
+
 }
 
 
